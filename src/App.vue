@@ -1,22 +1,34 @@
-<script setup>
-import map from './components/map.vue';
-</script>
-
 <template>
-  <map />
+  <Map :earthquake="earthquake"/>
 </template>
 
+<script>
+import Map from './components/map.vue';
+import getEarthquakes from './utils/map';
+
+export default {
+  components: { Map },
+  data: function(){
+    return {
+      earthquake: 0,
+    }
+  },
+
+  mounted(){
+    this.earthquakes()
+  },
+
+  methods: {
+    earthquakes: function(){
+      const earthq = getEarthquakes()
+      earthq.subscribe(this.updateMap)
+    },
+    updateMap: function(val){
+      this.earthquake = val
+    }
+  }
+}
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

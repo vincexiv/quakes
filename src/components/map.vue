@@ -1,12 +1,16 @@
 <template>
-  <div class="map">
-    Amazing stuff!!
+  <div ref="map" class="map">
+    Amazing stuff!! {{ earthquake }}
   </div>
 </template>
 
 <script>
+
 export default {
-  name: map,
+  name: 'Map',
+  props: {
+    earthquake: Number
+  },
 }
 </script>
 
