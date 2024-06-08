@@ -21,7 +21,12 @@ export default {
     mounted(){
         this.quakes.pluck('properties')
         .map(this.makeRow)
-        .subscribe(row => this.$refs.info.appendChild(row))
+        .bufferWithTime(500)
+        .subscribe(rows => {
+            const fragment = document.createDocumentFragment()
+            rows.forEach(row => fragment.appendChild(row))
+            this.$refs.info.appendChild(fragment)
+        })
     },
 
     methods: {
