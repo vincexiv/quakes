@@ -1,29 +1,12 @@
 <template>
-  <Map :earthquakes="earthquakes"/>
+  <Map />
 </template>
 
 <script>
 import Map from './components/map.vue';
-import getEarthquakes from './utils/earthquakes';
 
 export default {
-  components: { Map },
-  data: function(){
-    return {
-      earthquakes: [],
-    }
-  },
-
-  mounted(){
-    const earthq = getEarthquakes()
-    earthq.subscribe(this.updateMap)
-  },
-
-  methods: {
-    updateMap: function(earthquake){
-      this.earthquakes.push(earthquake)
-    },
-  }
+  components: { Map }
 }
 </script>
 

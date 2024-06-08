@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import getEarthquakes from '../utils/earthquakes';
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css"
 
@@ -10,7 +11,7 @@ export default {
   name: 'Map',
 
   props: {
-    earthquakes: Array
+    earthquakes: []
   },
 
   data(){
@@ -20,8 +21,9 @@ export default {
   },
 
   mounted(){
-    this.map = L.map(this.$refs.map).setView([33.858631, -118.279602], 7);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
+    this.createMap()
+    const earthq = getEarthquakes()
+    earthq.subscribe(this.addQuakePoint)
   },
 
   beforeUnmount(){
@@ -30,10 +32,18 @@ export default {
     }
   },
 
-  created(){
-    console.log("earthquakes: ", this.earthquakes)
+  methods: {
+    createMap: function(){
+      this.map = L.map(this.$refs.map).setView([33.858631, -118.279602], 7);
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map);
+    },
 
-  }
+    addQuakePoint: function(quake){
+      const coords = quake.geometry.coordinates;
+      const size = quake.properties.mag * 10000;
+      L.circle([coords[1], coords[0]], size).addTo(this.map);
+    }
+  },
 }
 </script>
 
