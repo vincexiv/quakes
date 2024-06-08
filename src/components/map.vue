@@ -3,12 +3,13 @@
 </template>
 
 <script>
-import getQuakes from '../utils/quakes'
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css"
 
 export default {
   name: 'Map',
+
+  props: { quakes: Object },
 
   data(){
     return {
@@ -18,7 +19,7 @@ export default {
 
   mounted(){
     this.createMap()
-    getQuakes().subscribe(this.addQuakePoint)
+    this.quakes.subscribe(this.addQuakePoint)
   },
 
   beforeUnmount(){

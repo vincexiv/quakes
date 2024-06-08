@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import getQuakes from '../utils/quakes';
 
 export default {
     name: 'Data',
 
+    props: { quakes: Object },
+
     mounted(){
-        const quakes = getQuakes()
-        quakes.pluck('properties')
+        this.quakes.pluck('properties')
         .map(this.makeRow)
         .subscribe(row => this.$refs.info.appendChild(row))
     },
