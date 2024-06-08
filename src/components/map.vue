@@ -56,11 +56,14 @@ export default {
 
   watch: {
     "hoverRow": function(){
-      const circle = this.quakeLayer.getLayer(this.codeLayers[this.hoverRow.row.id]);
-      circle.setStyle({ color: this.hoverRow.state ? '#ff0000' : '#0000ff' });
+      this.hoverRow.forEach(row => {
+        const circle = this.quakeLayer.getLayer(this.codeLayers[row.row.id]);
+        circle.setStyle({ color: row.color });
+      })
     },
     "clickRow": function(){
-      const circle = this.quakeLayer.getLayer(this.codeLayers[this.hoverRow.row.id]);
+      console.log(this.clickRow)
+      const circle = this.quakeLayer.getLayer(this.codeLayers[this.clickRow.id]);
       this.map.panTo(circle.getLatLng());
     }
   }

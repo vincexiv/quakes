@@ -1,6 +1,6 @@
 <template>
     <div class="data">
-        <table style="cellspacing: 0;" >
+        <table ref="table" style="cellspacing: 0;" >
             <thead>
                 <tr>
                     <th>Location</th>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import Rx from 'rx'
 import { isClicked, isHovering } from '../utils/observables'
 
 export default {
@@ -32,17 +33,25 @@ export default {
         .filter(rows => rows.length > 0)
         .subscribe(rows => {
             const fragment = document.createDocumentFragment()
-            rows.forEach(row => {
-                fragment.appendChild(row)
-                isHovering(row).subscribe(state => {
-                    this.rowHover({row, state})
-                })
-                isClicked(row).subscribe(() => {
-                    this.rowClick(row)
-                });
-            })
+            rows.forEach(row => { fragment.appendChild(row) })
             this.$refs.info.appendChild(fragment)
         })
+
+        this.getRowFromEvent('mouseover')
+        .pairwise()
+        .subscribe((rows) => {
+            const prevRow = rows[0]
+            const currRow = rows[1]
+            this.rowHover([
+                {row: prevRow, color: '#0000ff'},
+                {row: currRow, color: '#ff0000'}
+            ])
+        })
+
+        this.getRowFromEvent('click').subscribe(row => {
+            this.rowClick(row)
+        })
+
     },
 
     methods: {
@@ -62,6 +71,15 @@ export default {
                 return row;
             }
         },
+        getRowFromEvent: function(eventName){
+            return Rx.Observable.fromEvent(this.$refs.table, eventName)
+            .filter(event => {
+                const el = event.target
+                return el.nodeName === 'TD' && el.parentNode.id
+            })
+            .pluck('target', 'parentNode')
+            .distinctUntilChanged()
+        }
     },
 }
 </script>
