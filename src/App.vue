@@ -1,5 +1,5 @@
 <template>
-  <Map :earthquake="earthquake"/>
+  <Map :earthquakes="earthquakes"/>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
   components: { Map },
   data: function(){
     return {
-      earthquake: 0,
+      earthquakes: [],
     }
   },
 
@@ -20,9 +20,8 @@ export default {
   },
 
   methods: {
-    updateMap: function(val){
-      console.log("val: ", val)
-      this.earthquake += 1
+    updateMap: function(earthquake){
+      this.earthquakes.push(earthquake)
     },
   }
 }

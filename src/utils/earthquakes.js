@@ -5,7 +5,6 @@ import { jsonp } from 'vue-jsonp'
 
 function getEarthquakes(){
     return Rx.Observable.create(function(observer){
-        window.eqfeed_callback = function () { }
         setInterval(()=>{
             jsonp(QUAKE_URL, { callbackName: 'eqfeed_callback'}).then(response => {
                 observer.onNext(response.features)

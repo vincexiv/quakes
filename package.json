@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "leaflet": "^1.9.4",
     "rx": "^4.1.0",
     "rx-dom": "^7.0.3",
     "vue": "^3.4.21",
