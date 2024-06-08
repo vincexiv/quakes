@@ -12,19 +12,30 @@
 </template>
 
 <script>
+import { isHovering } from '../utils/observables'
 
 export default {
     name: 'Data',
 
-    props: { quakes: Object },
+    props: { 
+        quakes: Object,
+        rowHover: Function
+     },
 
     mounted(){
         this.quakes.pluck('properties')
         .map(this.makeRow)
         .bufferWithTime(500)
+        .filter(rows => rows.length > 0)
         .subscribe(rows => {
+            console.log(rows)
             const fragment = document.createDocumentFragment()
-            rows.forEach(row => fragment.appendChild(row))
+            rows.forEach(row => {
+                fragment.appendChild(row)
+                isHovering(row).subscribe((state) => {
+                    this.rowHover({row, state})
+                })
+            })
             this.$refs.info.appendChild(fragment)
         })
     },
@@ -45,7 +56,7 @@ export default {
     
                 return row;
             }
-        }
+        },
     },
 }
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div style="padding: 0.5rem;">
     <div class="map-data">
-      <Map class="map" :quakes="quakes"/>
-      <Data class="data" :quakes="quakes" />
+      <Map class="map" :quakes="quakes" :hoverRow="hoverRow"/>
+      <Data class="data" :quakes="quakes" :rowHover="rowHover"/>
     </div>
   </div>
 </template>
 
 <script>
-import getQuakes from './utils/quakes';
+import { getQuakes } from './utils/observables';
 import Map from './components/map.vue';
 import Data from './components/data.vue';
 
@@ -16,11 +16,17 @@ export default {
   components: { Map, Data },
   data(){
     return {
-      quakes: null
+      quakes: null,
+      hoverRow: { row: null, state: false }
     }
   },
   created(){
     this.quakes = getQuakes()
+  },
+  methods: {
+    rowHover: function(hover){
+      this.hoverRow = hover
+    }
   }
 }
 

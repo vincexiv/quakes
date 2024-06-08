@@ -30,4 +30,12 @@ function getQuakes(){
     .share()
 }
 
-export default getQuakes
+function isHovering(element){
+    const identity = Rx.helpers.identity
+    const over = Rx.DOM.mouseover(element).map(identity(true))
+    const out = Rx.DOM.mouseout(element).map(identity(false))
+
+    return over.merge(out)
+  }
+
+export { getQuakes, isHovering }
