@@ -39,9 +39,14 @@ export default {
     },
 
     addQuakePoint: function(quake){
-      const coords = quake.geometry.coordinates;
-      const size = quake.properties.mag * 10000;
-      L.circle([coords[1], coords[0]], size).addTo(this.map);
+      if(quake.type !== 'error'){
+        const coords = quake.geometry.coordinates;
+        const size = quake.properties.mag * 10000;
+        L.circle([coords[1], coords[0]], size).addTo(this.map);
+      } else {
+        console.warn("Failed to load quake data")
+        console.error(quake.details)
+      }
     }
   },
 }
