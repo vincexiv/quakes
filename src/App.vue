@@ -4,7 +4,7 @@
 
 <script>
 import Map from './components/map.vue';
-import getEarthquakes from './utils/map';
+import getEarthquakes from './utils/earthquakes';
 
 export default {
   components: { Map },
