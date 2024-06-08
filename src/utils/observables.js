@@ -36,6 +36,10 @@ function isHovering(element){
     const out = Rx.DOM.mouseout(element).map(identity(false))
 
     return over.merge(out)
-  }
+}
 
-export { getQuakes, isHovering }
+function isClicked(element){
+    return Rx.DOM.click(element)
+}
+
+export { getQuakes, isHovering, isClicked }

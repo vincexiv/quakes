@@ -1,8 +1,8 @@
 <template>
   <div style="padding: 0.5rem;">
     <div class="map-data">
-      <Map class="map" :quakes="quakes" :hoverRow="hoverRow"/>
-      <Data class="data" :quakes="quakes" :rowHover="rowHover"/>
+      <Map class="map" :quakes="quakes" :hoverRow="hoverRow" :clickRow="clickRow"/>
+      <Data class="data" :quakes="quakes" :rowHover="rowHover" :rowClick="rowClick"/>
     </div>
   </div>
 </template>
@@ -17,7 +17,8 @@ export default {
   data(){
     return {
       quakes: null,
-      hoverRow: { row: null, state: false }
+      hoverRow: { row: null, state: false },
+      clickRow: null
     }
   },
   created(){
@@ -26,6 +27,9 @@ export default {
   methods: {
     rowHover: function(hover){
       this.hoverRow = hover
+    },
+    rowClick: function(click){
+      this.clickRow = click
     }
   }
 }

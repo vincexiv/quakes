@@ -12,14 +12,15 @@
 </template>
 
 <script>
-import { isHovering } from '../utils/observables'
+import { isClicked, isHovering } from '../utils/observables'
 
 export default {
     name: 'Data',
 
     props: { 
         quakes: Object,
-        rowHover: Function
+        rowHover: Function,
+        rowClick: Function
      },
 
     mounted(){
@@ -28,13 +29,15 @@ export default {
         .bufferWithTime(500)
         .filter(rows => rows.length > 0)
         .subscribe(rows => {
-            console.log(rows)
             const fragment = document.createDocumentFragment()
             rows.forEach(row => {
                 fragment.appendChild(row)
-                isHovering(row).subscribe((state) => {
+                isHovering(row).subscribe(state => {
                     this.rowHover({row, state})
                 })
+                isClicked(row).subscribe(() => {
+                    this.rowClick(row)
+                });
             })
             this.$refs.info.appendChild(fragment)
         })

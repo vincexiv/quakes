@@ -11,7 +11,8 @@ export default {
 
   props: { 
     quakes: Object,
-    hoverRow: Object
+    hoverRow: Object,
+    clickRow: Object
   },
 
   data(){
@@ -57,6 +58,10 @@ export default {
     "hoverRow": function(){
       const circle = this.quakeLayer.getLayer(this.codeLayers[this.hoverRow.row.id]);
       circle.setStyle({ color: this.hoverRow.state ? '#ff0000' : '#0000ff' });
+    },
+    "clickRow": function(){
+      const circle = this.quakeLayer.getLayer(this.codeLayers[this.hoverRow.row.id]);
+      this.map.panTo(circle.getLatLng());
     }
   }
 }
