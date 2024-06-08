@@ -25,7 +25,9 @@ function getQuakes(){
                 observer.onNext(val)
             })
         })
-    }).distinct(function(val){ return val.id })
+    })
+    .distinct(function(val){ return val.id })
+    .share()
 }
 
 export default getQuakes
