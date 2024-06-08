@@ -3,11 +3,17 @@ import { QUAKE_URL } from "./config";
 import { jsonp } from 'vue-jsonp'
 
 
-function getEarthquakes(){
+function getQuakes(){
     return Rx.Observable.create(function(observer){
         setInterval(()=>{
-            jsonp(QUAKE_URL, { callbackName: 'eqfeed_callback'}).then(response => {
-                observer.onNext(response.features)
+            fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson').then(res => {
+                if(res.ok){
+                    res.json().then(data => {
+                        observer.onNext(data.features)
+                    })
+                } else {
+                    observer.onNext(Rx.Observable.return({type: 'error', details: err}))
+                }
             }).catch(err => {
                 observer.onNext(Rx.Observable.return({type: 'error', details: err}))
             })
@@ -22,4 +28,4 @@ function getEarthquakes(){
     }).distinct(function(val){ return val.id })
 }
 
-export default getEarthquakes
+export default getQuakes

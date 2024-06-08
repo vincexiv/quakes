@@ -1,18 +1,14 @@
 <template>
-  <div ref="map" id="map" style="width: 100vw; height: 100vh;"></div>
+  <div ref="map"></div>
 </template>
 
 <script>
-import getEarthquakes from '../utils/earthquakes';
+import getQuakes from '../utils/quakes'
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css"
 
 export default {
   name: 'Map',
-
-  props: {
-    earthquakes: []
-  },
 
   data(){
     return {
@@ -22,8 +18,7 @@ export default {
 
   mounted(){
     this.createMap()
-    const earthq = getEarthquakes()
-    earthq.subscribe(this.addQuakePoint)
+    getQuakes().subscribe(this.addQuakePoint)
   },
 
   beforeUnmount(){
@@ -39,7 +34,7 @@ export default {
     },
 
     addQuakePoint: function(quake){
-      if(quake.type !== 'error'){
+      if(quake && quake.type !== 'error'){
         const coords = quake.geometry.coordinates;
         const size = quake.properties.mag * 10000;
         L.circle([coords[1], coords[0]], size).addTo(this.map);
@@ -53,7 +48,4 @@ export default {
 </script>
 
 <style>
-.map {
-  outline: solid 0.1rem red;
-}
 </style>
