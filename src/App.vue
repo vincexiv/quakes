@@ -15,17 +15,15 @@ export default {
   },
 
   mounted(){
-    this.earthquakes()
+    const earthq = getEarthquakes()
+    earthq.subscribe(this.updateMap)
   },
 
   methods: {
-    earthquakes: function(){
-      const earthq = getEarthquakes()
-      earthq.subscribe(this.updateMap)
-    },
     updateMap: function(val){
-      this.earthquake = val
-    }
+      console.log("val: ", val)
+      this.earthquake += 1
+    },
   }
 }
 </script>
