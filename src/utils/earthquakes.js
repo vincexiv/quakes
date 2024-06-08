@@ -9,11 +9,14 @@ function getEarthquakes(){
         setInterval(()=>{
             jsonp(QUAKE_URL, { callbackName: 'eqfeed_callback'}).then(response => {
                 observer.onNext(response.features)
+            }).catch(err => {
+                observer.onNext(Rx.Observable.return({type: 'error', details: err}))
             })
         }, 5000)
-    }).flatMap(function(array){
+    })
+    .flatMap(function(array){
         return Rx.Observable.create(function(observer){
-            array.forEach(val => {
+            (array || []).forEach(val => {
                 observer.onNext(val)
             })
         })
