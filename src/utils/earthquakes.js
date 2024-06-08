@@ -20,7 +20,7 @@ function getEarthquakes(){
                 observer.onNext(val)
             })
         })
-    })
+    }).distinct(function(val){ return val.id })
 }
 
 export default getEarthquakes
