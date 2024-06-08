@@ -1,5 +1,5 @@
 <template>
-  <div ref="map"></div>
+  <div ref="map" class="data"></div>
 </template>
 
 <script>
@@ -67,5 +67,5 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 </style>

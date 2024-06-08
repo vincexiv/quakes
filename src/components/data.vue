@@ -1,14 +1,16 @@
 <template>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Location</th>
-                <th>Magnitude</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody ref="info" class="info"></tbody>
-    </table>
+    <div class="data">
+        <table style="cellspacing: 0;" >
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Magnitude</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody ref="info" class="info"></tbody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -65,7 +67,38 @@ export default {
 </script>
 
 <style scoped>
-th {
+th, td {
     text-align: left;
+    min-width: 30%;
+    padding: 0.3rem;
+}
+
+tr {
+    cursor: pointer;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background-color: skyblue;
+    border-radius: 5px;
+    width: 100%;
+}
+
+table {
+    font-size: x-small;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.data {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  width: calc(400px - 1rem);
+  height: calc(100vh - 3rem);
+  padding: 0.5rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>
