@@ -24,7 +24,7 @@ export default {
   },
 
   mounted(){
-    this.map = L.map(this.$refs.map).setView([33.858631, -118.279602], 7)
+    this.map = L.map(this.$refs.map, { attributionControl:false }).setView([33.858631, -118.279602], 7)
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map)
 
     this.quakeLayer = L.layerGroup([]).addTo(this.map);
