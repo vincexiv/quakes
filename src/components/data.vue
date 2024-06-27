@@ -1,5 +1,6 @@
 <template>
     <div class="data">
+        <h3>Earthquakes</h3>
         <table ref="table" style="cellspacing: 0;" >
             <thead>
                 <tr>
@@ -59,14 +60,26 @@ export default {
                 const row = document.createElement('tr');
                 row.id = props.net + props.code;
                 const date = new Date(props.time);
-                const time = date.toString();
     
-                [props.place, props.mag, time].forEach(function(text) {
+                const items = {
+                    place: props.place,
+                    mag: props.mag,
+                    time: date.toString()
+                }
+
+                for(const itemName in items){
                     const  cell = document.createElement('td');
-                    cell.textContent = text;
+                    cell.textContent = items[itemName];
+
+                    if(itemName === 'mag'){
+                        cell.style.textAlign = 'center'
+                    } else {
+                        cell.style.textAlign = 'left'
+                    }
+
+                    row.style.cursor = 'pointer'
                     row.appendChild(cell);
-                });
-    
+                }
                 return row;
             }
         },
@@ -107,10 +120,13 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+    color: rgba(0, 0, 0, 0.7);
+}
+
 th, td {
-    text-align: left;
     min-width: 30%;
-    padding: 0.3rem;
+    padding: 0 0.5rem;
     cursor: pointer;
 }
 
@@ -124,21 +140,36 @@ thead {
     background-color: skyblue;
     border-radius: 5px;
     width: 100%;
+    padding: 0.5rem;
 }
 
 table {
     font-size: x-small;
     border-collapse: separate;
     border-spacing: 0 10px;
+    height: calc(100% - 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .data {
-  /* width: 100%; */
-  height: 100%;
-  /* min-width: calc(400px - 1rem); */
-  max-height: calc(100vh - 3rem);
-  padding: 0.5rem;
-  overflow-y: scroll;
-  overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: calc(100vh - 3rem);
+    padding: 0.5rem;
+    gap: 1rem;
+}
+
+thead tr {
+    display: flex;
+    justify-content: space-around;
+}
+
+tbody {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 </style>
