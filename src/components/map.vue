@@ -62,7 +62,6 @@ export default {
       })
     },
     "clickRow": function(){
-      console.log(this.clickRow)
       const circle = this.quakeLayer.getLayer(this.codeLayers[this.clickRow.id]);
       this.map.panTo(circle.getLatLng());
     }

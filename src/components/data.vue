@@ -15,7 +15,6 @@
 
 <script>
 import Rx from 'rx'
-import { isClicked, isHovering } from '../utils/observables'
 
 export default {
     name: 'Data',
@@ -48,10 +47,10 @@ export default {
             ])
         })
 
-        this.getRowFromEvent('click').subscribe(row => {
+        this.filterMouseDown(this.getRowFromEvent('click'))
+        .subscribe(row => {
             this.rowClick(row)
         })
-
     },
 
     methods: {
@@ -71,6 +70,29 @@ export default {
                 return row;
             }
         },
+        filterMouseDown: function(observable){ // Filter out events where mouse is down
+            const mousedown = Rx.Observable.fromEvent(this.$refs.table, 'mousedown')
+                .startWith(null)
+                .map(event => {
+                    return event
+                })
+
+            const mouseup = Rx.Observable.fromEvent(this.$refs.table, 'mouseup')
+                .startWith(null)
+
+            return Rx.Observable.combineLatest(
+                observable, mousedown, mouseup,
+                function(observable, mousedown, mouseup){
+                    return { observable, mousedown, mouseup }
+                }
+            )
+            .filter(events => {
+                return events.mouseup?.timeStamp > events.mousedown?.timeStamp
+            })
+            .map(events => {
+                return events.observable
+            })
+        },
         getRowFromEvent: function(eventName){
             return Rx.Observable.fromEvent(this.$refs.table, eventName)
             .filter(event => {
@@ -89,6 +111,7 @@ th, td {
     text-align: left;
     min-width: 30%;
     padding: 0.3rem;
+    cursor: pointer;
 }
 
 tr {
@@ -110,11 +133,10 @@ table {
 }
 
 .data {
-  position: absolute;
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
-  width: calc(400px - 1rem);
-  height: calc(100vh - 3rem);
+  /* min-width: calc(400px - 1rem); */
+  max-height: calc(100vh - 3rem);
   padding: 0.5rem;
   overflow-y: scroll;
   overflow-x: hidden;

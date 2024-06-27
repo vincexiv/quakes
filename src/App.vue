@@ -11,6 +11,7 @@
 import { getQuakes } from './utils/observables';
 import Map from './components/map.vue';
 import Data from './components/data.vue';
+import makeResizableAndDraggable from './utils/interact';
 
 export default {
   components: { Map, Data },
@@ -23,6 +24,11 @@ export default {
   },
   created(){
     this.quakes = getQuakes()
+  },
+  mounted(){
+    this.$nextTick(()=>{
+      makeResizableAndDraggable('.data-container')
+    })
   },
   methods: {
     rowHover: function(hover){
@@ -50,9 +56,15 @@ export default {
   padding: 0;
 }
 
+.data-container,
+.data-container * {
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
 .data-container {
   outline: solid 0.1rem black;
-  position: absolute;
+  position: fixed;
   right: 1rem;
   top: 1rem;
   width: 400px;
