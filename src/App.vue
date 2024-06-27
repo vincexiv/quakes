@@ -3,10 +3,11 @@
     <Map class="map" :quakes="quakes" :hoverRow="hoverRow" :clickRow="clickRow"/>
     <div class="data-container">
       <div class="buttons">
-        <button>Earthquakes</button>
-        <button>Tweets</button>
+        <button v-on:click="()=>setActive('earthquakes')">Earthquakes</button>
+        <button v-on:click="()=>setActive('tweets')">Tweets</button>
       </div>
-      <Data :quakes="quakes" :rowHover="rowHover" :rowClick="rowClick"/>
+      <Data v-show="activeItem == 'earthquakes'" :quakes="quakes" :rowHover="rowHover" :rowClick="rowClick"/>
+      <Tweets v-show="activeItem == 'tweets'"/>
     </div>
   </div>
 </template>
@@ -16,11 +17,13 @@ import { getQuakes } from './utils/observables';
 import Map from './components/map.vue';
 import Data from './components/data.vue';
 import makeResizableAndDraggable from './utils/interact';
+import Tweets from './components/tweets.vue';
 
 export default {
-  components: { Map, Data },
+  components: { Map, Data, Tweets },
   data(){
     return {
+      activeItem: 'earthquakes',
       quakes: null,
       hoverRow: { row: null, state: false },
       clickRow: null
@@ -40,8 +43,11 @@ export default {
     },
     rowClick: function(click){
       this.clickRow = click
+    },
+    setActive(item){
+      this.activeItem = item
     }
-  }
+  },
 }
 
 </script>
@@ -78,9 +84,9 @@ export default {
   outline: solid 0.1rem black;
   position: fixed;
   right: 1rem;
-  top: 1rem;
+  top: 4rem;
   width: 400px;
-  height: calc(100vh - 2rem);
+  height: calc(100vh - 6rem);
   z-index: 999;
   padding: 0.5rem;
   

@@ -37,7 +37,7 @@ export default {
         .filter(rows => rows.length > 0)
         .subscribe(rows => {
             this.$refs.spinner.style.display = 'none'
-            
+
             const fragment = document.createDocumentFragment()
             rows.forEach(row => { fragment.appendChild(row) })
             this.$refs.info.appendChild(fragment)
@@ -65,19 +65,25 @@ export default {
             if(props.type !== 'error'){
                 const row = document.createElement('tr');
                 row.id = props.net + props.code;
+
+                row.style.display = 'flex'
+                row.style.gap = '1rem'
+
                 const date = new Date(props.time);
     
                 const items = {
                     place: props.place,
-                    mag: props.mag,
+                    mag: props.mag.toFixed(2),
                     time: date.toString()
                 }
 
                 for(const itemName in items){
                     const  cell = document.createElement('td');
                     cell.textContent = items[itemName];
+                    cell.style.width = '130px'
 
-                    if(itemName === 'mag'){
+                    if(itemName == 'place'){
+                    } else if(itemName === 'mag'){
                         cell.style.textAlign = 'center'
                     } else {
                         cell.style.textAlign = 'left'
