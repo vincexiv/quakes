@@ -2,6 +2,10 @@
   <div class="map-data">
     <Map class="map" :quakes="quakes" :hoverRow="hoverRow" :clickRow="clickRow"/>
     <div class="data-container">
+      <div class="buttons">
+        <button>Earthquakes</button>
+        <button>Tweets</button>
+      </div>
       <Data :quakes="quakes" :rowHover="rowHover" :rowClick="rowClick"/>
     </div>
   </div>
@@ -60,6 +64,14 @@ export default {
 .data-container * {
   -ms-touch-action: none;
   touch-action: none;
+}
+
+.buttons {
+  position: absolute;
+  display: flex;
+  gap: 0.5rem;
+  top: -2rem;
+  left: 0;
 }
 
 .data-container {
