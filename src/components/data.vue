@@ -9,7 +9,11 @@
                     <th>Time</th>
                 </tr>
             </thead>
-            <tbody ref="info" class="info"></tbody>
+            <tbody ref="info" class="info">
+                <div ref="spinner" class="spinner-container">
+                    <div class="spinner"></div>
+                </div>
+            </tbody>
         </table>
     </div>
 </template>
@@ -32,6 +36,8 @@ export default {
         .bufferWithTime(500)
         .filter(rows => rows.length > 0)
         .subscribe(rows => {
+            this.$refs.spinner.style.display = 'none'
+            
             const fragment = document.createDocumentFragment()
             rows.forEach(row => { fragment.appendChild(row) })
             this.$refs.info.appendChild(fragment)
@@ -141,6 +147,15 @@ thead {
     border-radius: 5px;
     width: 100%;
     padding: 0.5rem;
+}
+
+.spinner-container {
+    height: 100%;
+    display: flex;
+}
+
+.spinner {
+    margin: auto;
 }
 
 table {

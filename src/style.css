@@ -25,3 +25,20 @@
   border-radius: 20px;
   border: 3px solid rgba(0, 0, 0, 0.1);
 }
+
+/* Spinner */
+.spinner {
+  display: block;
+  width: 70px;
+  height: 70px;
+  border: 7px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: skyblue;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
