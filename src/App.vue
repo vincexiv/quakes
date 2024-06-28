@@ -81,12 +81,14 @@ export default {
 }
 
 .data-container {
-  outline: solid 0.1rem black;
+  /* outline: solid 0.1rem black; */
+  outline: solid 0.1rem rgba(0, 0, 0, 0.3);
   position: fixed;
   right: 1rem;
   top: 4rem;
   width: 400px;
   height: calc(100vh - 6rem);
+  min-height: 10rem;
   z-index: 999;
   padding: 0.5rem;
   

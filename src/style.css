@@ -26,6 +26,16 @@
   border: 3px solid rgba(0, 0, 0, 0.1);
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 button {
   padding: 0.2rem 0.5rem;
   cursor: pointer;
@@ -33,7 +43,11 @@ button {
   border: solid 0.1rem rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   background-color: skyblue;
-  color: white;
+  color: black;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(135, 206, 235, 0.3);
 }
 
 /* Spinner */

@@ -1,5 +1,5 @@
 <template>
-    <div class="data">
+    <div class="data noselect">
         <h3>Earthquakes</h3>
         <table ref="table" style="cellspacing: 0;" >
             <thead>
@@ -68,6 +68,8 @@ export default {
 
                 row.style.display = 'flex'
                 row.style.gap = '1rem'
+                row.style.padding = '0.5rem'
+                row.style.color = 'rgba(0, 0, 0, 0.7)'
 
                 const date = new Date(props.time);
     
