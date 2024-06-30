@@ -13,8 +13,10 @@
     "leaflet": "^1.9.4",
     "rx": "^4.1.0",
     "rx-dom": "^7.0.3",
+    "twit": "^2.2.11",
     "vue": "^3.4.21",
-    "vue-jsonp": "^2.0.0"
+    "vue-jsonp": "^2.0.0",
+    "ws": "^8.17.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
