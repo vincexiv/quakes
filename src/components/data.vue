@@ -39,7 +39,13 @@ export default {
             this.$refs.spinner.style.display = 'none'
 
             const fragment = document.createDocumentFragment()
-            rows.forEach(row => { fragment.appendChild(row) })
+
+            rows.sort((a, b) => {
+                const timestampA = (new Date(a.time)).valueOf()
+                const timestampB = (new Date(b.time)).valueOf()
+                return timestampA - timestampB
+            }).forEach(row => { fragment.appendChild(row) })
+
             this.$refs.info.appendChild(fragment)
         })
 
