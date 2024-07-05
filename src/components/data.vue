@@ -27,7 +27,8 @@ export default {
     props: { 
         quakes: Object,
         rowHover: Function,
-        rowClick: Function
+        rowClick: Function,
+        scrollTop: Boolean
      },
 
     mounted(){
@@ -47,6 +48,9 @@ export default {
             }).forEach(row => { fragment.appendChild(row) })
 
             this.$refs.info.appendChild(fragment)
+
+            const notificationIcon = document.querySelector('.earthquakes.notification-icon')
+            notificationIcon.style.display = 'block'
         })
 
         this.getRowFromEvent('mouseover')
@@ -66,6 +70,16 @@ export default {
         })
     },
 
+    updated(){
+        if(this.scrollTop){
+            this.$refs.info.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth",
+            });
+        }
+    },
+
     methods: {
         makeRow: function(props) {
             if(props.type !== 'error'){
@@ -82,7 +96,7 @@ export default {
                 const items = {
                     place: props.place,
                     mag: props.mag.toFixed(2),
-                    time: date.toString()
+                    time: date.toString(),
                 }
 
                 for(const itemName in items){

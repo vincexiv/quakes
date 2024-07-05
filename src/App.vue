@@ -1,14 +1,28 @@
 <template>
   <div class="map-data">
     <Map class="map" :quakes="quakes" :hoverRow="hoverRow" :clickRow="clickRow"/>
+
     <div class="data-container">
       <div class="buttons">
-        <button v-on:click="()=>setActive('earthquakes')">Earthquakes</button>
-        <button v-on:click="()=>setActive('tweets')">Tweets</button>
+        <button v-on:click="()=>setActive('earthquakes')">
+          Earthquakes
+          <span class="earthquakes notification-icon"></span>
+        </button>
+        <button v-on:click="()=>setActive('tweets')">
+          Tweets
+          <span class="tweets notification-icon"></span>
+        </button>
       </div>
-      <Data v-show="activeItem == 'earthquakes'" :quakes="quakes" :rowHover="rowHover" :rowClick="rowClick"/>
-      <Tweets v-show="activeItem == 'tweets'"/>
+
+      <Data v-show="activeItem == 'earthquakes'"
+        :quakes="quakes"
+        :rowHover="rowHover"
+        :rowClick="rowClick"
+        :scrollTop="scrollDataTop"/>
+      <Tweets v-show="activeItem == 'tweets'"
+        :scrollTop="scrollTweetsTop"/>
     </div>
+
   </div>
 </template>
 
@@ -25,6 +39,8 @@ export default {
     return {
       activeItem: 'earthquakes',
       quakes: null,
+      scrollDataTop: false,
+      scrollTweetsTop: false,
       hoverRow: { row: null, state: false },
       clickRow: null
     }
@@ -46,6 +62,14 @@ export default {
     },
     setActive(item){
       this.activeItem = item
+      this.scrollDataTop = true
+      window.queueMicrotask(() => {
+        const notificationIcon = document.querySelector(`.${item}.notification-icon`)
+        notificationIcon.style.display = 'none'
+      })
+      window.queueMicrotask(() => {
+        this.scrollDataTop = false
+      })
     }
   },
 }
