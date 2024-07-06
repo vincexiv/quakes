@@ -47,7 +47,7 @@ export default {
                 return timestampA - timestampB
             }).forEach(row => { fragment.appendChild(row) })
 
-            this.$refs.info.appendChild(fragment)
+            this.$refs.info.insertBefore(fragment, this.$refs.info.firstChild)
 
             const notificationIcon = document.querySelector('.earthquakes.notification-icon')
             notificationIcon.style.display = 'block'

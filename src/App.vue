@@ -4,13 +4,13 @@
 
     <div class="data-container">
       <div class="buttons">
-        <button v-on:click="()=>setActive('earthquakes')">
+        <button v-on:click="()=>setActive('earthquakes')" :class="activeState('earthquakes')">
           Earthquakes
-          <span class="earthquakes notification-icon"></span>
+          <span :class="['earthquakes', 'notification-icon']"></span>
         </button>
-        <button v-on:click="()=>setActive('tweets')">
+        <button v-on:click="()=>setActive('tweets')" :class="activeState('tweets')">
           Tweets
-          <span class="tweets notification-icon"></span>
+          <span :class="['tweets', 'notification-icon']"></span>
         </button>
       </div>
 
@@ -70,6 +70,13 @@ export default {
       window.queueMicrotask(() => {
         this.scrollDataTop = false
       })
+    },
+    activeState(item){
+      if(this.activeItem === item){
+        return 'active'
+      } else {
+        return 'inactive'
+      }
     }
   },
 }
@@ -102,6 +109,10 @@ export default {
   gap: 0.5rem;
   top: -2rem;
   left: 0;
+}
+
+button.active {
+  background-color: rgb(3, 163, 226);
 }
 
 .data-container {
