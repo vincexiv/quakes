@@ -22,7 +22,7 @@
 import Rx from 'rx'
 
 export default {
-    name: 'Data',
+    name: 'Quakes',
 
     props: { 
         quakes: Object,

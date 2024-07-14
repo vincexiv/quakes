@@ -14,7 +14,7 @@
         </button>
       </div>
 
-      <Data v-show="activeItem == 'earthquakes'"
+      <Quakes v-show="activeItem == 'earthquakes'"
         :quakes="quakes"
         :rowHover="rowHover"
         :rowClick="rowClick"
@@ -29,12 +29,12 @@
 <script>
 import { getQuakes } from './utils/observables';
 import Map from './components/map.vue';
-import Data from './components/data.vue';
+import Quakes from './components/quakes.vue';
 import makeResizableAndDraggable from './utils/interact';
 import Tweets from './components/tweets.vue';
 
 export default {
-  components: { Map, Data, Tweets },
+  components: { Map, Quakes, Tweets },
   data(){
     return {
       activeItem: 'earthquakes',
