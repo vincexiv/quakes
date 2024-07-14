@@ -16,18 +16,20 @@
 
       <Quakes v-show="activeItem == 'earthquakes'"
         :quakes="quakes"
+        :socket="socket"
         :rowHover="rowHover"
         :rowClick="rowClick"
         :scrollTop="scrollDataTop"/>
       <Tweets v-show="activeItem == 'tweets'"
-        :scrollTop="scrollTweetsTop"/>
+        :scrollTop="scrollTweetsTop"
+        :socket="socket"/>
     </div>
 
   </div>
 </template>
 
 <script>
-import { getQuakes } from './utils/observables';
+import { getQuakes, getSocket } from './utils/observables';
 import Map from './components/map.vue';
 import Quakes from './components/quakes.vue';
 import makeResizableAndDraggable from './utils/interact';
@@ -39,6 +41,7 @@ export default {
     return {
       activeItem: 'earthquakes',
       quakes: null,
+      socket: null,
       scrollDataTop: false,
       scrollTweetsTop: false,
       hoverRow: { row: null, state: false },
@@ -47,6 +50,8 @@ export default {
   },
   created(){
     this.quakes = getQuakes()
+    this.socket = getSocket()
+
   },
   mounted(){
     this.$nextTick(()=>{

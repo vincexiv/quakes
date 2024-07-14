@@ -22,6 +22,20 @@
 
 export default {
     name: 'Tweets',
+
+    props: {
+        socket: Object
+    },
+
+    mounted(){
+        this.socket.subscribe(this.handleWebSocketMessages)
+    },
+
+    methods: {
+        handleWebSocketMessages: function(quakeData){
+            console.log(quakeData)
+        }
+    }
 }
 </script>
 

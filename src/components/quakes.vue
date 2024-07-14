@@ -26,12 +26,28 @@ export default {
 
     props: { 
         quakes: Object,
+        socket: Object,
         rowHover: Function,
         rowClick: Function,
         scrollTop: Boolean
-     },
+    },
 
     mounted(){
+        // (1)
+        this.quakes.bufferWithCount(10)
+        .subscribe(quakes => {
+            const quakesData = quakes.map(quake => {
+                return {
+                    id: quake.properties.net + quake.properties.code,
+                    lat: quake.geometry.coordinates[1],
+                    lng: quake.geometry.coordinates[0],
+                    mag: quake.properties.mag
+                }
+            })
+            this.socket.onNext(JSON.stringify({quakes: quakesData}))
+        })
+
+        // (2)
         this.quakes.pluck('properties')
         .map(this.makeRow)
         .bufferWithTime(500)
@@ -53,6 +69,7 @@ export default {
             notificationIcon.style.display = 'block'
         })
 
+        // (3)
         this.getRowFromEvent('mouseover')
         .pairwise()
         .subscribe((rows) => {
@@ -64,6 +81,7 @@ export default {
             ])
         })
 
+        // (4)
         this.filterMouseDown(this.getRowFromEvent('click'))
         .subscribe(row => {
             this.rowClick(row)

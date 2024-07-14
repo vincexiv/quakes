@@ -1,5 +1,5 @@
 import Rx from "rx-dom";
-import { QUAKE_URL } from "./config";
+import { QUAKE_URL, WEBSOCKET_URL } from "./variables";
 
 function getQuakes(){
     return Rx.Observable.create(function(observer){
@@ -40,4 +40,8 @@ function isClicked(element){
     return Rx.DOM.click(element)
 }
 
-export { getQuakes, isHovering, isClicked }
+function getSocket(){
+    return Rx.DOM.fromWebSocket(WEBSOCKET_URL) // Connect to websocket
+}
+
+export { getQuakes, isHovering, isClicked, getSocket }
