@@ -1,12 +1,10 @@
 import Rx from "rx-dom";
 import { QUAKE_URL } from "./config";
-import { jsonp } from 'vue-jsonp'
-
 
 function getQuakes(){
     return Rx.Observable.create(function(observer){
         setInterval(()=>{
-            fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson').then(res => {
+            fetch(QUAKE_URL).then(res => {
                 if(res.ok){
                     res.json().then(data => {
                         observer.onNext(data.features)
